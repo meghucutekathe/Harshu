@@ -242,30 +242,120 @@ function checkQuiz(answer, correctAnswer, questions) {
     loadRandomQuiz(JSON.parse(questions.replace(/&quot;/g, '"')));
 }
 
+// Function to call the Funny Voice API
+async function getFunnyVoice(msg) {
+    try {
+        const response = await fetch('https://api.example.com/funny-voice', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer YOUR_API_KEY' // Replace with your actual API key
+            },
+            body: JSON.stringify({ text: msg })
+        });
+
+        if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Audio URL:', data.audioUrl); // Debugging line
+        return data.audioUrl;
+    } catch (error) {
+        console.error('Error fetching funny voice:', error);
+
+        // Additional error details
+        try {
+            const errorDetails = await error.response.json();
+            console.error('Error details:', errorDetails);
+        } catch (jsonError) {
+            console.error('Error parsing error details:', jsonError);
+        }
+
+        alert('Failed to fetch funny voice. Please try again.');
+    }
+}
+
 // Voice Fun - Listen and Repeat in Funny Voice
-function startVoiceFun() {
+async function startVoiceFun() {
     const msg = prompt("🎙️ Say something fun!");
     if (msg) {
-        const speech = new SpeechSynthesisUtterance(msg);
-        speech.pitch = 2; // Make it sound funny
-        window.speechSynthesis.speak(speech);
+        const audioUrl = await getFunnyVoice(msg);
+        if (audioUrl) {
+            const audio = new Audio(audioUrl);
+            audio.play();
+        }
     }
 }
 
-// Adventure Story with restart
+// The Adventure of Harshu: The Guardian of Mystica
 function startStory() {
     document.getElementById('game-area').innerHTML = `
-        <h2>🚀 Adventure Begins</h2>
-        <p>You find a treasure chest. Do you open it?</p>
-        <button onclick="continueStory('yes')">Yes</button>
-        <button onclick="continueStory('no')">No</button>
-    `;
-}
+           <h2>🌟 <b>The Adventure of Harshu: The Guardian of Mystica</b> 🌟</h2>
+    <p>Once upon a time, in the small town of <b>Hassan</b>, lived a brave and kind-hearted boy named <b>Harshu</b>. He was young boy, full of energy, and loved exploring places no one dared to go. Harshu wasn’t like other kids—he was always curious, asking questions about the world, and dreaming of exciting adventures.</p>
 
-function continueStory(choice) {
-    if (choice === 'yes') {
-        alert('💎 You found gold!');
-    } else {
-        alert('🚪 You walked away safely!');
-    }
+    <h3>🏡 <b>A Strange Discovery</b></h3>
+    <p>One sunny afternoon, Harshu was playing near the old banyan tree at the edge of the town. While digging in the sand, he felt something hard.</p>
+    <p><i>"What’s this?"</i> he wondered, pulling out a <b>shiny, golden key</b>. The key had strange symbols engraved on it, and it shimmered in the sunlight.</p>
+    <p>Harshu’s eyes lit up with excitement.</p>
+    <p><i>"This must be something magical!"</i> he whispered to himself.</p>
+    <p>Curious to know where the key led, Harshu decided to explore <b>the ancient ruins</b> near his town. His sister Meghu had once told him that the ruins were mysterious, and no one dared to go near them. But Harshu was fearless.</p>
+
+    <h3>🕵️‍♂️ <b>The Hidden Portal</b></h3>
+    <p>As Harshu reached the ruins, he noticed an old <b>stone door</b> covered in vines and moss. His heart pounded with excitement as he inserted the golden key into the lock.</p>
+    <p><i>Click!</i></p>
+    <p>The door creaked open, revealing a <b>glowing portal</b> swirling with blue and purple lights.</p>
+    <p><i>"Whoa! This is amazing!"</i> Harshu gasped.</p>
+    <p>Without a second thought, he stepped into the portal—and in the blink of an eye, he was transported to a magical world called <b>Mystica</b>.</p>
+
+    <h3>🏞️ <b>The World of Mystica</b></h3>
+    <p>Mystica was unlike anything Harshu had ever seen. The sky was filled with sparkling stars, even though it was daytime. There were <b>talking animals, floating islands, and magical rivers</b> that glowed in different colors.</p>
+    <p>As Harshu stood in awe, a tiny <b>fairy</b> with golden wings flew towards him.</p>
+    <p><i>"Welcome, brave one! I am Zara, the guardian of Mystica,"</i> she said with a smile.</p>
+    <p><i>"Why am I here?"</i> Harshu asked, confused but excited.</p>
+    <p>Zara’s face turned serious.</p>
+    <p><i>"Mystica is in danger. The evil sorcerer, <b>Zorak</b>, has stolen the <b>Heart of Mystica</b>, the source of all magic. Without it, our world will collapse. Only a hero can retrieve it… and that hero is <b>YOU, Harshu!</b>"</i></p>
+
+    <h3>⚔️ <b>The Quest Begins</b></h3>
+    <p>Harshu’s eyes widened. <i>"Me? A hero?"</i> he asked, unsure.</p>
+    <p>Zara nodded. <i>"You are brave, kind, and smart. Mystica needs you. Will you help us?"</i></p>
+    <p>Harshu didn’t hesitate. <i>"I’ll do it!"</i> he said with determination.</p>
+    <p>Zara handed him a <b>magic sword</b> that gleamed with power. <i>"This sword will guide you. But be careful—Zorak’s army is dangerous."</i></p>
+
+    <h3>🐉 <b>The Journey Through Danger</b></h3>
+    <p>Harshu’s journey began. He traveled through <b>enchanted forests</b>, crossed <b>raging rivers</b>, and climbed <b>snowy mountains</b>. Along the way, he met some amazing friends:</p>
+    <ul>
+        <li><b>Rocky the Talking Tiger</b> 🐅 – A fierce protector with a heart of gold.</li>
+        <li><b>Tina the Clever Owl</b> 🦉 – She gave Harshu clues and wisdom whenever he was confused.</li>
+        <li><b>Bobby the Jolly Dwarf</b> 🧝‍♂️ – Who made him laugh even in tough situations.</li>
+    </ul>
+    <p>Together, they faced dangerous <b>shadow beasts, tricky puzzles</b>, and <b>deadly traps</b> set by Zorak. But Harshu never gave up.</p>
+
+    <h3>🏰 <b>Battle at the Dark Fortress</b></h3>
+    <p>After many challenges, Harshu and his friends finally reached <b>Zorak’s Dark Fortress</b>. The sky was dark, and lightning crackled as they stood before the massive iron gates.</p>
+    <p><i>"This is it,"</i> Harshu whispered, gripping his sword tightly.</p>
+    <p>Inside, Zorak waited with his <b>army of shadows</b>.</p>
+    <p><i>"You’ll never take the Heart of Mystica!"</i> Zorak roared, his eyes glowing red.</p>
+    <p>A fierce battle began. Harshu fought bravely, dodging spells and swinging his sword with all his might. His friends stood by his side, helping him defeat the shadow army.</p>
+    <p>But Zorak was powerful. He summoned a giant <b>Shadow Dragon</b> that roared with fury.</p>
+
+    <h3>💖 <b>The Power of Courage</b></h3>
+    <p>Harshu closed his eyes and remembered his family—his loving sister Meghu and all the people who believed in him. His heart filled with <b>courage and love</b>.</p>
+    <p><i>"I won’t let you destroy Mystica!"</i> Harshu shouted.</p>
+    <p>With one final blow, Harshu’s sword <b>glowed with pure light</b> and struck the Shadow Dragon. The beast let out a deafening roar and vanished into thin air.</p>
+    <p>Zorak screamed in anger as the <b>Heart of Mystica</b> returned to its place, filling the land with magic once more.</p>
+
+    <h3>🌟 <b>A Hero Returns</b></h3>
+    <p>Mystica was saved. The people cheered, and Zara smiled proudly at Harshu.</p>
+    <p><i>"You did it, Harshu. You are truly a hero,"</i> she said.</p>
+    <p>As a reward, Zara gifted Harshu a <b>magical amulet</b> that would protect him wherever he went.</p>
+    <p>But it was time to go home. Harshu stepped back into the portal, and in a flash, he was back near the banyan tree.</p>
+
+    <h3>🎉 <b>A New Beginning</b></h3>
+    <p>Harshu looked at the amulet in his hand and smiled.</p>
+    <p><i>"What an adventure!"</i> he whispered.</p>
+    <p>From that day on, Harshu knew he was destined for greatness. Though he was back in his town, he always kept his <b>spirit of adventure alive</b>, ready for the next call of destiny.</p>
+
+    <p><b>**The End.** 🌟✨</b></p>
+    `;
 }
